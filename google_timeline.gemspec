@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Integrate Map-Timeline (Google)}
   spec.description   = %q{Integrate Map Timeline (Google)}
-  spec.homepage      = "http://www.surajitkhan.in"
+  spec.homepage      = "https://github.com/surajit16/google_timeline"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
