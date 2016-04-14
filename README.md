@@ -1,6 +1,6 @@
 # GoogleTimeline
 
-Welcome to Map Timeline (Google) integration!
+Welcome to Map Timeline (Google) integration! #beta release
 
 
 ## Installation
