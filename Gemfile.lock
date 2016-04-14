@@ -1,0 +1,28 @@
+PATH
+  remote: .
+  specs:
+    google_timeline (1.0)
+      nokogiri (~> 1.6)
+      polylines (~> 0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    mini_portile2 (2.0.0)
+    nokogiri (1.6.7.2)
+      mini_portile2 (~> 2.0.0.rc2)
+    polylines (0.3.0)
+    rake (10.5.0)
+    rspec (0.9.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.10)
+  google_timeline!
+  rake (~> 10.0)
+  rspec (~> 0)
+
+BUNDLED WITH
+   1.11.2
