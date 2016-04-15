@@ -13,7 +13,8 @@ class GoogleMapTimeline
     coordinates = []
     value = self.file_path
     key = Date.parse(value.split("/").last.split(".").first.gsub("history-", "")) rescue nil
-
+    op_hash[:date] = key
+    
     if key.nil? == false and File.exists?(value)
       kml = File.read(value)
       doc = Nokogiri::XML(kml)

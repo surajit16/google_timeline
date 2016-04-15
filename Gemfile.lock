@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    google_timeline (1.0)
+    google_timeline (1.0.2)
       nokogiri (~> 1.6)
       polylines (~> 0)
 

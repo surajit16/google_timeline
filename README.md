@@ -24,23 +24,23 @@ Or install it yourself as:
 ```ruby
  GoogleTimeline.get_timeline("/home/surajit/Downloads/history-2016-04-03.kml")
 ```
-     => {:url=>"http://maps.googleapis.com/maps/api/staticmap?scale=2&path=enc:}lvmA{f}xMVYi@GGAAAf@n@i@o@IDCKIC@?A?f@LLBFDaAYKCRFCAybCWn[vjEmXbbJk_CjhFhR`UjbGfwJrhN~cIjtJfoO~tI|{KxuIvdMz|E~~Sz[jzC~~JfpQ`zCznPljHdzSziJpyPliL|oLgfAfcJxtCnfI????tIjhDvI|wO~tC|hMsR`nAksAzhNyoAh`Im@G_@rzLweKnyMgaJb{IxvE~`G|wHztChCsq@imFy]ayEohBaDarHnwBirC??aWbS`WcS||BwvA`jLgyLhAyzGtpCaaVjSakMumDcmMbk@cxMshCa{MxuAcrIc|@avF}nD}fDamIgpFmxJe~NszEucRczBosHgsEyxQelEg_EEj@fAeFmLybCeqB_dFk{BqvNcpGqiHwlEygEa{Fg_LezHoiKswL}zGt_Bc|FfjCahSmbBmkI_|DbK&size=600x600&sensor=false"} 
+     => {:date=>#<Date: 2016-04-03 ((2457482j,0s,0n),+0s,2299161j)>, :url=>"http://maps.googleapis.com/maps/api/staticmap?scale=2&path=enc:}lvmA{f}xMVYi@GGAAAf@n@i@o@IDCKIC@?A?f@LLBFDaAYKCRFCAybCWn[vjEmXbbJk_CjhFhR`UjbGfwJrhN~cIjtJfoO~tI|{KxuIvdMz|E~~Sz[jzC~~JfpQ`zCznPljHdzSziJpyPliL|oLgfAfcJxtCnfI????tIjhDvI|wO~tC|hMsR`nAksAzhNyoAh`Im@G_@rzLweKnyMgaJb{IxvE~`G|wHztChCsq@imFy]ayEohBaDarHnwBirC??aWbS`WcS||BwvA`jLgyLhAyzGtpCaaVjSakMumDcmMbk@cxMshCa{MxuAcrIc|@avF}nD}fDamIgpFmxJe~NszEucRczBosHgsEyxQelEg_EEj@fAeFmLybCeqB_dFk{BqvNcpGqiHwlEygEa{Fg_LezHoiKswL}zGt_Bc|FfjCahSmbBmkI_|DbK&size=600x600&sensor=false"}
 
 or
 ```ruby
   GoogleTimeline.get_timeline("/home/surajit/Downloads/history-2016-04-03.kml", {:distance=>true})
 ```
-     => {:url=>"http://maps.googleapis.com/maps/api/staticmap?scale=2&path=enc:}lvmA{f}xMVYi@GGAAAf@n@i@o@IDCKIC@?A?f@LLBFDaAYKCRFCAybCWn[vjEmXbbJk_CjhFhR`UjbGfwJrhN~cIjtJfoO~tI|{KxuIvdMz|E~~Sz[jzC~~JfpQ`zCznPljHdzSziJpyPliL|oLgfAfcJxtCnfI????tIjhDvI|wO~tC|hMsR`nAksAzhNyoAh`Im@G_@rzLweKnyMgaJb{IxvE~`G|wHztChCsq@imFy]ayEohBaDarHnwBirC??aWbS`WcS||BwvA`jLgyLhAyzGtpCaaVjSakMumDcmMbk@cxMshCa{MxuAcrIc|@avF}nD}fDamIgpFmxJe~NszEucRczBosHgsEyxQelEg_EEj@fAeFmLybCeqB_dFk{BqvNcpGqiHwlEygEa{Fg_LezHoiKswL}zGt_Bc|FfjCahSmbBmkI_|DbK&size=600x600&sensor=false", :distance=>{:value=>520181.2852676145, :unit=>"meter"}} 
+     => {:date=>#<Date: 2016-04-03 ((2457482j,0s,0n),+0s,2299161j)>, :url=>"http://maps.googleapis.com/maps/api/staticmap?scale=2&path=enc:}lvmA{f}xMVYi@GGAAAf@n@i@o@IDCKIC@?A?f@LLBFDaAYKCRFCAybCWn[vjEmXbbJk_CjhFhR`UjbGfwJrhN~cIjtJfoO~tI|{KxuIvdMz|E~~Sz[jzC~~JfpQ`zCznPljHdzSziJpyPliL|oLgfAfcJxtCnfI????tIjhDvI|wO~tC|hMsR`nAksAzhNyoAh`Im@G_@rzLweKnyMgaJb{IxvE~`G|wHztChCsq@imFy]ayEohBaDarHnwBirC??aWbS`WcS||BwvA`jLgyLhAyzGtpCaaVjSakMumDcmMbk@cxMshCa{MxuAcrIc|@avF}nD}fDamIgpFmxJe~NszEucRczBosHgsEyxQelEg_EEj@fAeFmLybCeqB_dFk{BqvNcpGqiHwlEygEa{Fg_LezHoiKswL}zGt_Bc|FfjCahSmbBmkI_|DbK&size=600x600&sensor=false", :distance=>{:value=>520181.2852676145, :unit=>"meter"}}
 
 or
 ```ruby
 GoogleTimeline.get_timeline("/home/surajit/Downloads/history-2016-04-03.kml", {:distance=>true}, {:home_coordinate=>[0,0]})
 ```
-     => {:url=>"http://maps.googleapis.com/maps/api/staticmap?scale=2&path=enc:}lvmA{f}xMVYi@GGAAAf@n@i@o@IDCKIC@?A?f@LLBFDaAYKCRFCAybCWn[vjEmXbbJk_CjhFhR`UjbGfwJrhN~cIjtJfoO~tI|{KxuIvdMz|E~~Sz[jzC~~JfpQ`zCznPljHdzSziJpyPliL|oLgfAfcJxtCnfI????tIjhDvI|wO~tC|hMsR`nAksAzhNyoAh`Im@G_@rzLweKnyMgaJb{IxvE~`G|wHztChCsq@imFy]ayEohBaDarHnwBirC??aWbS`WcS||BwvA`jLgyLhAyzGtpCaaVjSakMumDcmMbk@cxMshCa{MxuAcrIc|@avF}nD}fDamIgpFmxJe~NszEucRczBosHgsEyxQelEg_EEj@fAeFmLybCeqB_dFk{BqvNcpGqiHwlEygEa{Fg_LezHoiKswL}zGt_Bc|FfjCahSmbBmkI_|DbK&size=600x600&sensor=false", :distance=>{:value=>520181.2852676145, :unit=>"meter"}} 
+     => {:date=>#<Date: 2016-04-03 ((2457482j,0s,0n),+0s,2299161j)>, :url=>"http://maps.googleapis.com/maps/api/staticmap?scale=2&path=enc:}lvmA{f}xMVYi@GGAAAf@n@i@o@IDCKIC@?A?f@LLBFDaAYKCRFCAybCWn[vjEmXbbJk_CjhFhR`UjbGfwJrhN~cIjtJfoO~tI|{KxuIvdMz|E~~Sz[jzC~~JfpQ`zCznPljHdzSziJpyPliL|oLgfAfcJxtCnfI????tIjhDvI|wO~tC|hMsR`nAksAzhNyoAh`Im@G_@rzLweKnyMgaJb{IxvE~`G|wHztChCsq@imFy]ayEohBaDarHnwBirC??aWbS`WcS||BwvA`jLgyLhAyzGtpCaaVjSakMumDcmMbk@cxMshCa{MxuAcrIc|@avF}nD}fDamIgpFmxJe~NszEucRczBosHgsEyxQelEg_EEj@fAeFmLybCeqB_dFk{BqvNcpGqiHwlEygEa{Fg_LezHoiKswL}zGt_Bc|FfjCahSmbBmkI_|DbK&size=600x600&sensor=false", :distance=>{:value=>520181.2852676145, :unit=>"meter"}}
 
 distance and home_coordinate are optional.
 distance: To measure the travel distance which will return value in meter
-home_coordinate: to mention the home coordinate 
+home_coordinate: to mention the home coordinate
 
 
 ## Development
