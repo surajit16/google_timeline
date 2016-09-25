@@ -24,29 +24,39 @@ class GoogleMapTimeline
       if location_str.length < 1900
         url = location_url(location_str)
       else
-        times = doc.search('when').map{|c| DateTime.parse(c.content)} rescue []
+        new_location_str = location_str.gsub("?", "")
+        if new_location_str.length < 1900
+          url = location_url(new_location_str)
+        else
 
-        coordinate_time_hash = {}
-        times.each_with_index do |t, i|
-          coordinate_time_hash[t] = coordinates[i]
-        end
-
-        interval = 10*60 #10min
-        selected_coordinates = []
-        prev_time = nil
-        coordinate_time_hash.each do |k,v|
-          if prev_time.nil?
-            selected_coordinates << v
-            prev_time = k
-          else
-            if (((k - prev_time) * 24 * 60 * 60).to_i >= interval)
-              selected_coordinates << v
-              prev_time = k
+          coordinate_time_hash = {}
+          doc.search('Placemark').each do |node|
+            cords = node.search('.//gx:coord').map{|c| c.content.split(" ")[0..1].map{|co| co.to_f}.reverse}
+            start_time = DateTime.parse(node.search('TimeSpan').search('begin').first.content)
+            end_time = DateTime.parse(node.search('TimeSpan').search('end').first.content)
+            time_diff = ((end_time - start_time)* 24 * 60 * 60).to_i
+            cords.each_with_index do |cord, i|
+              coordinate_time_hash[(start_time + (i*(time_diff/cords.length)))] = cord
             end
           end
+
+          interval = 10*60 #10min
+          selected_coordinates = []
+          prev_time = nil
+          coordinate_time_hash.each do |k,v|
+            if prev_time.nil?
+              selected_coordinates << v
+              prev_time = k
+            else
+              if (((k - prev_time) * 24 * 60 * 60).to_i >= interval)
+                selected_coordinates << v
+                prev_time = k
+              end
+            end
+          end
+          location_str = polylines_encoding(selected_coordinates)
+          url=location_url(location_str)
         end
-        location_str = polylines_encoding(selected_coordinates)
-        url=location_url(location_str)
       end
     end
     op_hash[:url] = url
