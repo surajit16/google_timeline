@@ -18,46 +18,21 @@ class GoogleMapTimeline
     if key.nil? == false and File.exists?(value)
       kml = File.read(value)
       doc = Nokogiri::XML(kml)
-      coordinates = doc.search('//gx:coord').map{|c| c.content.split(" ")[0..1].map{|co| co.to_f}.reverse} rescue []
+      #      Google supports 4 decimal point only -- Need to check with google support
+      #      coordinates = doc.search('LineString/coordinates').map{|c| c.content.split(" ")}.flatten.map{|co| co.split(",")[0..1].reverse.map{|co1| co1.to_f}} rescue []
+      coordinates = doc.search('coordinates').map{|c| c.content.split(" ")}.flatten.map{|co| co.split(",")[0..1].reverse.map{|co1| co1.to_f.round(4)}} rescue []
       location_str = polylines_encoding(coordinates)
 
-      if location_str.length < 1900
-        url = location_url(location_str)
-      else
-        new_location_str = location_str.gsub("?", "")
-        if new_location_str.length < 1900
-          url = location_url(new_location_str)
-        else
 
-          coordinate_time_hash = {}
-          doc.search('Placemark').each do |node|
-            cords = node.search('.//gx:coord').map{|c| c.content.split(" ")[0..1].map{|co| co.to_f}.reverse}
-            start_time = DateTime.parse(node.search('TimeSpan').search('begin').first.content)
-            end_time = DateTime.parse(node.search('TimeSpan').search('end').first.content)
-            time_diff = ((end_time - start_time)* 24 * 60 * 60).to_i
-            cords.each_with_index do |cord, i|
-              coordinate_time_hash[(start_time + (i*(time_diff/cords.length)))] = cord
-            end
-          end
-
-          interval = 10*60 #10min
-          selected_coordinates = []
-          prev_time = nil
-          coordinate_time_hash.each do |k,v|
-            if prev_time.nil?
-              selected_coordinates << v
-              prev_time = k
-            else
-              if (((k - prev_time) * 24 * 60 * 60).to_i >= interval)
-                selected_coordinates << v
-                prev_time = k
-              end
-            end
-          end
-          location_str = polylines_encoding(selected_coordinates)
-          url=location_url(location_str)
+      if location_str.length > 1900
+        coordinates_dup = coordinates.dup
+        while location_str.length > 1900 do
+          coordinates_dup = coordinates_dup.values_at(* coordinates_dup.each_index.select {|i| i.even?})
+          location_str = polylines_encoding(coordinates_dup)
         end
       end
+      url = location_url(location_str)  
+      
     end
     op_hash[:url] = url
 
@@ -74,7 +49,7 @@ class GoogleMapTimeline
   end
 
   def polylines_encoding(str)
-    Polylines::Encoder.encode_points(str)
+    Polylines::Encoder.encode_points(str).to_s.gsub("?", "")
   end
 
   def default_map
