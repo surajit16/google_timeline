@@ -49,7 +49,7 @@ class GoogleMapTimeline
   end
 
   def polylines_encoding(str)
-    Polylines::Encoder.encode_points(str).to_s.gsub("?", "")
+    Polylines::Encoder.encode_points(str)
   end
 
   def default_map
