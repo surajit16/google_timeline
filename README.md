@@ -1,4 +1,4 @@
-# GoogleTimeline (beta release)
+# GoogleTimeline
 
 Welcome to Map Timeline (Google) integration!
 
