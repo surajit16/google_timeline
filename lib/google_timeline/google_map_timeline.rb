@@ -18,21 +18,20 @@ class GoogleMapTimeline
     if key.nil? == false and File.exists?(value)
       kml = File.read(value)
       doc = Nokogiri::XML(kml)
-      #      Google supports 4 decimal point only -- Need to check with google support
-      #      coordinates = doc.search('LineString/coordinates').map{|c| c.content.split(" ")}.flatten.map{|co| co.split(",")[0..1].reverse.map{|co1| co1.to_f}} rescue []
-      coordinates = doc.search('coordinates').map{|c| c.content.split(" ")}.flatten.map{|co| co.split(",")[0..1].reverse.map{|co1| co1.to_f.round(4)}} rescue []
-      location_str = polylines_encoding(coordinates)
+      coordinates = doc.search('coordinates').map{|c| c.content.split(" ")}.flatten.map{|co| co.split(",")[0..1].reverse.map{|co1| co1.to_f}} rescue []
+      unless coordinates.is_a?(Array) 
+        location_str = polylines_encoding(coordinates)
 
-
-      if location_str.length > 1900
-        coordinates_dup = coordinates.dup
-        while location_str.length > 1900 do
-          coordinates_dup = coordinates_dup.values_at(* coordinates_dup.each_index.select {|i| i.even?})
-          location_str = polylines_encoding(coordinates_dup)
+        if location_str.length > 1900
+          coordinates_dup = coordinates.dup
+          while location_str.length > 1900 do
+            coordinates_dup = coordinates_dup.values_at(* coordinates_dup.each_index.select {|i| i.even?})
+            location_str = polylines_encoding(coordinates_dup)
+          end
         end
+        url = location_url(location_str)  
       end
-      url = location_url(location_str)  
-      
+
     end
     op_hash[:url] = url
 
@@ -49,7 +48,7 @@ class GoogleMapTimeline
   end
 
   def polylines_encoding(str)
-    Polylines::Encoder.encode_points(str)
+    Polylines::Encoder.encode_points(str).gsub("\\", '%5c')
   end
 
   def default_map
