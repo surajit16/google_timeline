@@ -19,7 +19,7 @@ class GoogleMapTimeline
       kml = File.read(value)
       doc = Nokogiri::XML(kml)
       coordinates = doc.search('coordinates').map{|c| c.content.split(" ")}.flatten.map{|co| co.split(",")[0..1].reverse.map{|co1| co1.to_f}} rescue []
-      unless coordinates.is_a?(Array) 
+      if coordinates.is_a?(Array) 
         location_str = polylines_encoding(coordinates)
 
         if location_str.length > 1900
