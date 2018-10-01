@@ -8,6 +8,16 @@ class GoogleMapTimeline
   end
 
   def get_timeline_url(args)
+    #initialize flags
+    overall_distance_flag = false
+    transport_mode_flag = false
+    places_flag = false
+    if (args.empty?)==false
+      overall_distance_flag = !args.select{|a| a.is_a?(Hash) and a[:distance]==true}.first.nil?
+      transport_mode_flag = !args.select{|a| a.is_a?(Hash) and a[:transport_mode]==true}.first.nil?
+      places_flag = !args.select{|a| a.is_a?(Hash) and a[:places]==true}.first.nil?
+    end
+    
     op_hash = {}
     url=default_map
     coordinates = []
@@ -34,10 +44,18 @@ class GoogleMapTimeline
 
     end
     op_hash[:url] = url
-
-    if (args.empty?)==false and (args.select{|a| a.is_a?(Hash) and a[:distance]==true}.first).nil? == false
+    #overall distance
+    if overall_distance_flag
       distance = {:value => overall_distance(coordinates), :unit=>"meter"}
       op_hash[:distance] = distance
+    end
+    #Transport Mode and places
+    
+    
+    if (transport_mode_flag or places_flag)
+      transport_mode_hash, places_array = transport_mode_and_places(doc, transport_mode_flag, places_flag)
+      op_hash[:transport_mode] = transport_mode_hash if transport_mode_flag
+      op_hash[:places] = places_array if places_flag
     end
     return op_hash
   end
@@ -86,5 +104,16 @@ class GoogleMapTimeline
 
     rm * c # Delta in meters
   end
-
+  
+  def transport_mode_and_places(doc, transport_mode_flag, places_flag)
+    transport_mode_hash = {} 
+    places_array = []    
+    if transport_mode_flag
+      doc.search('Placemark').select{|dc| dc.children.map(&:name).include?("LineString")}.map{|dc| dc.children.select{|d| d.name=="ExtendedData"}[0].children.map{|d| d.children[0]}.flatten[1..2].map{|d| d.children[0].text}}.each do |tm|
+        transport_mode_hash[tm[0]] = transport_mode_hash[tm[0]].to_i + tm[1].to_i 
+      end
+    end
+    places_array = (doc.search('Placemark').select{|dc| dc.children.map(&:name).include?("Point")}.map{|dc| dc.children.select{|d| d.name=="name"}[0].children[0].text} rescue []) if places_flag
+    return transport_mode_hash, places_array
+  end
 end
