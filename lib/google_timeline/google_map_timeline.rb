@@ -1,14 +1,17 @@
 class GoogleMapTimeline
   attr_accessor :home_coordinate
   attr_accessor :file_path
+  attr_accessor :google_api_key
 
-  def initialize(file_path, home_coordinate)
+  def initialize(file_path, home_coordinate, google_api_key)
     self.file_path = file_path
     self.home_coordinate = home_coordinate
+    self.google_api_key = google_api_key
   end
 
   def get_timeline_url(args)
     #initialize flags
+    location_str_max_length = 1800
     overall_distance_flag = false
     transport_mode_flag = false
     places_flag = false
@@ -32,9 +35,9 @@ class GoogleMapTimeline
       if coordinates.is_a?(Array) 
         location_str = polylines_encoding(coordinates)
 
-        if location_str.length > 1900
+        if location_str.length > location_str_max_length
           coordinates_dup = coordinates.dup
-          while location_str.length > 1900 do
+          while location_str.length > location_str_max_length do
             coordinates_dup = coordinates_dup.values_at(* coordinates_dup.each_index.select {|i| i.even?})
             location_str = polylines_encoding(coordinates_dup)
           end
@@ -62,7 +65,7 @@ class GoogleMapTimeline
 
   private
   def location_url(location_str)
-    "http://maps.googleapis.com/maps/api/staticmap?scale=2&path=enc:#{location_str}&size=600x600&sensor=false"
+    "http://maps.googleapis.com/maps/api/staticmap?scale=2&path=enc:#{location_str}&size=600x600&sensor=false&key=#{self.google_api_key}"
   end
 
   def polylines_encoding(str)
