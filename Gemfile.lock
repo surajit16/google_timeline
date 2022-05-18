@@ -2,17 +2,19 @@ PATH
   remote: .
   specs:
     google_timeline (2.2.0)
-      nokogiri (~> 1.7.2)
+      nokogiri (>= 1.6.7.2, < 1.13.7.0)
       polylines (~> 0)
 
 GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.2.5)
-    mini_portile2 (2.1.0)
-    nokogiri (1.7.2)
-      mini_portile2 (~> 2.1.0)
-    polylines (0.3.0)
+    mini_portile2 (2.8.0)
+    nokogiri (1.13.6)
+      mini_portile2 (~> 2.8.0)
+      racc (~> 1.4)
+    polylines (0.4.0)
+    racc (1.6.0)
     rake (10.5.0)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
